@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# PROVIDE: hunchentoot
+# REQUIRE: LOGIN httpd
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name="hunchentoot"
+rcvar=`set_rcvar`
+
+start_cmd="${name}_start"
+stop_cmd="${name}_stop"
+
+hunchentoot_start ()
+{
+    sbcl=${SBCL:-'/usr/local/bin/sbcl'}
+    STARTUP=/var/lib/hunchentoot/startup.lisp
+    CORE=/var/lib/hunchentoot/sbcl.core
+
+    echo "Starting $name..."
+    (cd /tmp; nohup su -m htoot -c \
+	"$sbcl --core $CORE --load $STARTUP" &) >/dev/null 2>&1 
+}
+
+hunchentoot_stop ()
+{
+    echo "Stopping $name..."
+    killall -u htoot > /dev/null 2>&1
+}
+
+load_rc_config $name
+run_rc_command "$1"

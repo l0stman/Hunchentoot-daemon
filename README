@@ -1,0 +1,13 @@
+These scripts launch hunchentoot as a daemon at startup under FreeBSD
+7.2 behind Apache via mod_proxy.
+* you need to create the user htoot
+which runs the web server.  Its home directory is /var/lib/hunchentoot
+and have no login shell.
+* place the file core.lisp in the directory /var/lib/hunchentoot and
+the file hunchentoot in /etc/rc.d
+* as root, run sbcl --script core.lisp to create a core file for
+hunchentoot
+* make sure that the directory /var/lib/hunchentoot is readable and
+executable only by htoot and that this user owns all the file under this
+directory.
+* add the entry hunchentoot_enable="YES" in /etc/rc.conf
