@@ -10,6 +10,11 @@
 (defparameter *swank-port* 4005)
 (defparameter *magic-port* 6441)
 
+(setf asdf:*central-registry*
+	       (list* #p "/usr/local/lib/common-lisp/system-registry/"
+		      #p "/usr/local/lib/sbcl/site-systems/"
+		      asdf:*central-registry*))
+
 (defun sigterm-handler (sig code scp)
   (declare (ignore sig code scp))
   ;; Shut down Swank and anyone else by terminating all threads
