@@ -6,6 +6,8 @@ export SBCL_HOME=${SBCL_HOME:-'/usr/local/lib/sbcl'}
 export HOME="/var/lib/hunchentoot"
 
 SBCL=${SBCL:-'/usr/local/bin/sbcl'}
+DTTY=${DTTY:-'/usr/local/bin/detachtty'}
+ATTY=${ATTY:-'/usr/local/bin/attachtty'}
 
 . /var/lib/hunchentoot/htoot.conf
 
@@ -18,7 +20,7 @@ case "$1" in
 	    chmod 400 $HT_CORE
 	fi
 
-	detachtty \
+	$DTTY \
 	    --dribble-file $HT_HTLOG \
 	    --log-file $HT_DTTYLOG \
 	    --pid-file $HT_PIDFILE \
@@ -26,7 +28,7 @@ case "$1" in
 	    $SBCL --core $HT_CORE --load $HT_STARTUP --eval '(start-htoot)'
 	;;
     swank)
-	attachtty $HT_SOCK <<EOF >/dev/null 2>&1
+	$ATTY $HT_SOCK <<EOF >/dev/null 2>&1
 (start-swank)
 EOF
 	;;
