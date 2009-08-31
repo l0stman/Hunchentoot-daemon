@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# Hunchentoot daemon
+
+export SBCL_HOME=${SBCL_HOME:-'/usr/local/lib/sbcl'}
+export HOME="/var/lib/hunchentoot"
+
+SBCL=${SBCL:-'/usr/local/bin/sbcl'}
+
+. /var/lib/hunchentoot/htoot.conf
+
+
+case "$1" in
+    start)
+	if [ ! -f $HT_CORE ] ; then
+	    $SBCL --script $HT_CORESRC
+	    chown "${HT_USR}:${HT_GRP}" $HT_CORE
+	    chmod 400 $HT_CORE
+	fi
+
+	detachtty \
+	    --dribble-file $HT_HTLOG \
+	    --log-file $HT_DTTYLOG \
+	    --pid-file $HT_PIDFILE \
+	    $HT_SOCK \
+	    $SBCL --core $HT_CORE --load $HT_STARTUP --eval '(start-htoot)'
+	;;
+    swank)
+	attachtty $HT_SOCK <<EOF >/dev/null 2>&1
+(start-swank)
+EOF
+	;;
+    stop)
+	kill `cat $HT_PIDFILE`
+	rm -f $HT_SOCK
+	rm -f $HT_HTLOG
+	rm -f $HT_DTTYLOG
+	;;
+    *)
+	echo "usage: `basename $0` {start|stop|swank}" >&2
+	exit 1
+	;;
+esac
+
+exit 0
