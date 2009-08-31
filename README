@@ -1,13 +1,42 @@
 These scripts launch hunchentoot as a daemon at startup under FreeBSD
-7.2 behind Apache via mod_proxy.
-* you need to create the user htoot
-which runs the web server.  Its home directory is /var/lib/hunchentoot
-and have no login shell.
-* place the file core.lisp in the directory /var/lib/hunchentoot and
-the file hunchentoot in /etc/rc.d
-* as root, run sbcl --script core.lisp to create a core file for
-hunchentoot
-* make sure that the directory /var/lib/hunchentoot is readable and
-executable only by htoot and that this user owns all the file under this
-directory.
-* add the entry hunchentoot_enable="YES" in /etc/rc.conf
+7.2 using detachtty (http://www.cliki.net/detachtty).  We could attach
+to the lisp process to launch a swank server for slime to connect to.
+
+First you need to create the user htoot which runs the hunchentoot web
+server.  Its home directory is /var/lib/hunchentoot and it has no
+login shell.  The files startup.lisp, core.lisp, htoot.conf and
+htootd should be placed in the directory /var/lib/hunchentoot and the
+file hunchentoot under /etc/rc.d.
+
+Make sure that the directory /var/lib/hunchentoot is readable and
+executable only by htoot and that this user owns all the files under
+this directory.
+
+* core.lisp: creates a custom core file for sbcl to speed up the
+launch of the web server and the swank server.
+
+* startup.lisp:  contains the procedures that launch hunchentoot and a
+swank server.
+
+* htoot.conf:  contains the general configurations of the hunchentoot
+daemon on the system.
+
+* htootd:  the hunchentoot daemon itself.  Make sure that this file is
+executable only by htoot.  It could take 3 kind of arguments:
+- start:  to start the hunchentoot web server.
+- swank:  to start a swank server so we could connect to the server
+with slime using: emacs --eval '(slime-connect "127.0.0.1" 4005)' at
+the command line or 'M-x slime-connect RET RET' within emacs.  Use
+slime-disconnect when you're done and the swank server would shut down
+itself leaving hunchentoot running.
+- stop: stop hunchentoot and do some cleanup
+
+* hunchentoot: rc script for the hunchentoot daemon htootd.  It
+runs hunchentoot as the user htoot and not as root.  You could add the
+entry hunchentoot_enable="YES" in /etc/rc.conf to launch hunchentoot
+automatically at startup.  To create a swank server you could execute
+the command
+> sudo /etc/rc.d/hunchentoot swank
+or
+> sudo /etc/rc.d/hunchentoot stop
+to stop it.
