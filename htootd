@@ -34,9 +34,7 @@ EOF
 	;;
     stop)
 	kill `cat $HT_PIDFILE`
-	rm -f $HT_SOCK
-	rm -f $HT_HTLOG
-	rm -f $HT_DTTYLOG
+	rm -f $HT_SOCK $HT_HTLOG $HT_DTTYLOG
 	;;
     *)
 	echo "usage: `basename $0` {start|stop|swank}" >&2
