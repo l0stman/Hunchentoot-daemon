@@ -10,6 +10,8 @@
 (defparameter *htoot-server* nil)
 (defparameter *swank-server* nil)
 
+(setq hunchentoot:*message-log-pathname* #p"/var/lib/hunchentoot/message.log")
+
 (defun sigterm-handler (sig code scp)
   (declare (ignore sig code scp))
   ;; Shut down Swank and anyone else by terminating all threads
