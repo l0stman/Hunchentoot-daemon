@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # PROVIDE: hunchentoot
-# REQUIRE: LOGIN httpd
+# REQUIRE: LOGIN nginx
 # KEYWORD: shutdown
 
 . /etc/rc.subr
