@@ -27,17 +27,15 @@ case "$1" in
 	    $HT_SOCK \
 	    $SBCL --core $HT_CORE --load $HT_STARTUP --eval '(start-htoot)'
 	;;
-    swank)
-	$ATTY $HT_SOCK <<EOF >/dev/null 2>&1
-(start-swank)
-EOF
+    attach)
+	$ATTY $HT_SOCK
 	;;
     stop)
 	kill `cat $HT_PIDFILE`
 	rm -f $HT_SOCK $HT_HTLOG $HT_DTTYLOG
 	;;
     *)
-	echo "usage: `basename $0` {start|stop|swank}" >&2
+	echo "usage: `basename $0` {start|stop|attach}" >&2
 	exit 1
 	;;
 esac

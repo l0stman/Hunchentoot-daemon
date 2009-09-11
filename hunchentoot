@@ -12,8 +12,8 @@ rcvar=`set_rcvar`
 
 start_cmd="htoot_exec $HTOOTD start"
 stop_cmd="htoot_exec $HTOOTD stop"
-swank_cmd="htoot_exec $HTOOTD swank"
-extra_commands="swank"
+attach_cmd="htoot_exec $HTOOTD attach"
+extra_commands="attach"
 
 htoot_exec()
 {
