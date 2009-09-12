@@ -25,7 +25,7 @@ case "$1" in
 	    --log-file $HT_DTTYLOG \
 	    --pid-file $HT_PIDFILE \
 	    $HT_SOCK \
-	    $SBCL --core $HT_CORE --load $HT_STARTUP --eval '(start-htoot)'
+	    $SBCL --core $HT_CORE --load $HT_STARTUP
 	;;
     attach)
 	$ATTY $HT_SOCK

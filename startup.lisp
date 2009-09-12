@@ -10,6 +10,8 @@
 (defparameter *htoot-server* nil)
 (defparameter *swank-server* nil)
 
+(require :basics)
+
 (setq hunchentoot:*message-log-pathname* #p"/var/lib/hunchentoot/message.log")
 
 (defun sigterm-handler (sig code scp)
@@ -36,5 +38,6 @@
   (princ *swank-port*) (terpri))
 
 (sb-sys:enable-interrupt sb-unix:sigterm #'sigterm-handler)
-
-;; startup.lisp ends here
+(start-htoot)
+(basics:start-time)
+(basics:start-calculator)
