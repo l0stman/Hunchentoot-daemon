@@ -13,8 +13,6 @@
 (setq hunchentoot:*message-log-pathname* #p"/var/lib/hunchentoot/message.log")
 (setq hunchentoot:*dispatch-table* (list 'hunchentoot:dispatch-easy-handlers))
 
-(require :basics)
-
 (defun sigterm-handler (sig code scp)
   (declare (ignore sig code scp))
   ;; Shut down Swank and anyone else by terminating all threads
@@ -40,4 +38,4 @@
 
 (sb-sys:enable-interrupt sb-unix:sigterm #'sigterm-handler)
 (start-htoot)
-(basics:start-calculator)
+(require :basics)
