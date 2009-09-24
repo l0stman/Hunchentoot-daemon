@@ -3,6 +3,7 @@
 # Hunchentoot daemon
 
 export SBCL_HOME=${SBCL_HOME:-'/usr/local/lib/sbcl'}
+export LC_CTYPE="en_US.UTF-8"
 export HOME="/var/lib/hunchentoot"
 
 SBCL=${SBCL:-'/usr/local/bin/sbcl'}
