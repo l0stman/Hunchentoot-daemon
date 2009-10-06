@@ -12,6 +12,12 @@ Make sure that the directory /var/lib/hunchentoot is readable and
 executable only by htoot and that this user owns all the files under
 this directory.
 
+* patch-src-attachtty.c: this patched version of attachtty allows to
+pass code to a detached lisp process and set timeouts
+(http://common-lisp.net/project/bese/repos/detachtty).  If you
+install detachtty using the ports collection, you just need to place
+this file in the directory /usr/ports/misc/detachtty/files.
+
 * core.lisp: creates a custom core file for sbcl to speed up the
 launch of the web server and the swank server.
 
@@ -22,14 +28,16 @@ swank server.
 daemon on the system.
 
 * htootd:  the hunchentoot daemon itself.  Make sure that this file is
-executable only by htoot.  It could take 3 kind of arguments:
+executable only by htoot.  It could take 5 kind of arguments:
 - start:  to start the hunchentoot web server.
 - swank:  to start a swank server so we could connect to the server
 with slime using: emacs --eval '(slime-connect "127.0.0.1" 4005)' at
 the command line or 'M-x slime-connect RET RET' within emacs.  Use
 slime-disconnect when you're done and the swank server would shut down
 itself leaving hunchentoot running.
-- stop: stop hunchentoot and do some cleanup
+- attach: to attach to the detached lisp process running hunchentoot.
+- log: to see the latest entries in the log file.
+- stop: stop hunchentoot and do some cleanup.
 
 * hunchentoot: rc script for the hunchentoot daemon htootd.  It
 runs hunchentoot as the user htoot and not as root.  You could add the
