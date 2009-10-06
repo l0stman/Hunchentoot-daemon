@@ -2,16 +2,16 @@
 
 # Hunchentoot daemon
 
+. /var/lib/hunchentoot/htoot.conf
+
 export SBCL_HOME=${SBCL_HOME:-'/usr/local/lib/sbcl'}
 export LC_CTYPE="en_US.UTF-8"
 export HOME="/var/lib/hunchentoot"
+export HT_LOG
 
 SBCL=${SBCL:-'/usr/local/bin/sbcl'}
 DTTY=${DTTY:-'/usr/local/bin/detachtty'}
 ATTY=${ATTY:-'/usr/local/bin/attachtty'}
-
-. /var/lib/hunchentoot/htoot.conf
-
 
 case "$1" in
     start)
@@ -22,21 +22,27 @@ case "$1" in
 	fi
 
 	$DTTY \
-	    --dribble-file $HT_HTLOG \
+	    --dribble-file $HT_DRIBBLE \
 	    --log-file $HT_DTTYLOG \
 	    --pid-file $HT_PIDFILE \
 	    $HT_SOCK \
 	    $SBCL --core $HT_CORE --load $HT_STARTUP
 	;;
+    swank)
+	$ATTY $HT_SOCK '(start-swank)'
+	;;
     attach)
 	$ATTY $HT_SOCK
+	;;
+    log)
+	tail -f $HT_LOG
 	;;
     stop)
 	kill `cat $HT_PIDFILE`
 	rm -f $HT_SOCK $HT_HTLOG $HT_DTTYLOG
 	;;
     *)
-	echo "usage: `basename $0` {start|stop|attach}" >&2
+	echo "usage: `basename $0` {start|stop|swank|log|attach}" >&2
 	exit 1
 	;;
 esac

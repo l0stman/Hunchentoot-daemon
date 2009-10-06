@@ -10,8 +10,10 @@
 (defparameter *htoot-server* nil)
 (defparameter *swank-server* nil)
 
-(setq hunchentoot:*message-log-pathname* #p"/var/lib/hunchentoot/message.log")
-(setq hunchentoot:*dispatch-table* (list 'hunchentoot:dispatch-easy-handlers))
+(setq hunchentoot:*message-log-pathname*
+      (pathname (posix-getenv "HT_LOG")))
+(setq hunchentoot:*dispatch-table*
+      (list 'hunchentoot:dispatch-easy-handlers))
 
 (defun sigterm-handler (sig code scp)
   (declare (ignore sig code scp))
@@ -38,4 +40,3 @@
 
 (sb-sys:enable-interrupt sb-unix:sigterm #'sigterm-handler)
 (start-htoot)
-(require :basics)
