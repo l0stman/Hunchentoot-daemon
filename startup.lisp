@@ -2,7 +2,7 @@
 
 ;; ports that will be listened on localhost:
 ;;
-;;   *htoot-port* - Hunchentoot (via mod_proxy)
+;;   *htoot-port* - Hunchentoot (via proxy)
 ;;   *swank-port* - Swank (via ssh+Emacs)
 
 (defparameter *htoot-port* 8080)
