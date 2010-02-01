@@ -62,3 +62,8 @@ this directory.
         or
         > sudo /etc/rc.d/hunchentoot stop
         to stop it.
+
+* install.sh:
+
+	Create the user and group for Hunchentoot and install the
+	different scripts.
