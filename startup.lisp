@@ -10,10 +10,8 @@
 (defparameter *htoot-server* nil)
 (defparameter *swank-server* nil)
 
-(setq hunchentoot:*message-log-pathname*
-      (pathname (posix-getenv "HT_LOG")))
-(setq hunchentoot:*dispatch-table*
-      (list 'hunchentoot:dispatch-easy-handlers))
+(setq hunchentoot:*message-log-pathname* (pathname (posix-getenv "HT_LOG"))
+      hunchentoot:*dispatch-table* (list 'hunchentoot:dispatch-easy-handlers))
 
 (defun sigterm-handler (sig code scp)
   (declare (ignore sig code scp))
@@ -24,19 +22,18 @@
   (sleep 1)
   (sb-ext:quit))
 
-;; Start a Hunchentoot server listening for connections
 (defun start-htoot ()
+  "Start a Hunchentoot server listening for connections."
   (setf *htoot-server*
-	(hunchentoot:start (make-instance 'hunchentoot:acceptor :port *htoot-port*)))
-  (princ "Hunchentoot server started on port ")
-  (princ *htoot-port*) (terpri))
+	(hunchentoot:start
+         (make-instance 'hunchentoot:acceptor :port *htoot-port*)))
+  (format t "Hunchentoot server started on port ~S~%" *htoot-port*))
 
-;; Start a Swank server
 (defun start-swank ()
+  "Start a Swank server for SLIME."
   (setf *swank-server*
 	(swank:create-server :style :spawn :port *swank-port*))
-  (princ "Swank server started on port ")
-  (princ *swank-port*) (terpri))
+  (format t "Swank server started on port ~S~%" *swank-port*))
 
 (sb-sys:enable-interrupt sb-unix:sigterm #'sigterm-handler)
 (start-htoot)
