@@ -7,7 +7,7 @@
 export SBCL_HOME=${SBCL_HOME:-'/usr/local/lib/sbcl'}
 export LC_CTYPE="en_US.UTF-8"
 export HOME="/var/lib/hunchentoot"
-export HT_LOG
+export HT_LOG HT_CORE
 
 SBCL=${SBCL:-'/usr/local/bin/sbcl'}
 DTTY=${DTTY:-'/usr/local/bin/detachtty'}
@@ -38,7 +38,7 @@ case "$1" in
 	tail -f $HT_LOG
 	;;
     stop)
-	kill `cat $HT_PIDFILE`
+	kill `cat $HT_PIDFILE` 2>/dev/null
 	rm -f $HT_SOCK $HT_DRIBBLE $HT_DTTYLOG
 	;;
     *)

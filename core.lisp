@@ -8,4 +8,4 @@
 (require :hunchentoot)
 (require :cl-who)
 
-(save-lisp-and-die "/var/lib/hunchentoot/sbcl.core")
+(save-lisp-and-die (posix-getenv "HT_CORE"))
