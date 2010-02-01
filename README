@@ -14,20 +14,22 @@ this directory.
 
 * patch-src-attachtty.c:
 
-	This patched version of attachtty allows to pass code to a
-	detached lisp process and set timeouts
-	(http://common-lisp.net/project/bese/repos/detachtty).  If you
-	install detachtty using the ports collection, you just need to
-	place this file in the directory /usr/ports/misc/detachtty/files.
+        This patched version of attachtty allows to pass code to a
+        detached lisp process and set timeouts
+        (http://common-lisp.net/project/bese/repos/detachtty).  If you
+        install detachtty using the ports collection, you just need to
+        place this file in the directory
+        /usr/ports/misc/detachtty/files.
 
 * core.lisp:
 
-	Creates a custom core file for sbcl to speed up the launch of
-	the web server and the swank server.
+        Creates a custom core file for sbcl to speed up the launch of
+        the web server and the swank server.
 
 * startup.lisp:
 
-	Contains the procedures that launch hunchentoot and a swank server.
+        Contains the procedures that launch hunchentoot and a swank
+        server.
 
 * htoot.conf:
 
