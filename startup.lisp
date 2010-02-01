@@ -32,7 +32,9 @@
 (defun start-swank ()
   "Start a Swank server for SLIME."
   (setf *swank-server*
-	(swank:create-server :style :spawn :port *swank-port*))
+	(swank:create-server :style :spawn
+                             :port *swank-port*
+                             :coding-system "utf-8-unix"))
   (format t "Swank server started on port ~S~%" *swank-port*))
 
 (sb-sys:enable-interrupt sb-unix:sigterm #'sigterm-handler)
