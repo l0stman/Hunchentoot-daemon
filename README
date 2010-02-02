@@ -67,5 +67,5 @@ this directory.
 
 * install.sh:
 
-	Create the user and group for Hunchentoot and install the
-	different scripts.
+        Create the user and group for Hunchentoot and install the
+        different scripts.

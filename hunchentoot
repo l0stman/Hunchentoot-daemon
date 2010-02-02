@@ -10,16 +10,16 @@
 name="hunchentoot"
 rcvar=`set_rcvar`
 
-start_cmd="htoot_exec $HTOOTD start"
-stop_cmd="htoot_exec $HTOOTD stop"
-attach_cmd="htoot_exec $HTOOTD attach"
-swank_cmd="htoot_exec $HTOOTD swank"
-log_cmd="htoot_exec $HTOOTD log"
+start_cmd="htoot_exec start"
+stop_cmd="htoot_exec stop"
+attach_cmd="htoot_exec attach"
+swank_cmd="htoot_exec swank"
+log_cmd="htoot_exec log"
 extra_commands="attach swank log"
 
-htoot_exec()
+htoot_exec ()
 {
-    su -m $HT_USR -c "$*"
+    su -m $HT_USR -c "$HTOOTD $1"
 }
 
 required_files="/var/lib/hunchentoot/htoot.conf"
