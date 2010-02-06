@@ -38,7 +38,7 @@ case "$1" in
 	tail -f $HT_LOG
 	;;
     stop)
-	kill `cat $HT_PIDFILE` 2>/dev/null
+	( kill `cat $HT_PIDFILE` ) 2>/dev/null
 	rm -f $HT_SOCK $HT_DRIBBLE $HT_DTTYLOG
 	;;
     *)
